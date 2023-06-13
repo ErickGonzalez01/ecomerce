@@ -28,16 +28,34 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
 
-$routes->post("api/login","UserController::index");
-$routes->post("api/login/add","UserController::post");
+//Url views
+$routes->get('/', 'Home::index');/*
+$routes->get('/vendedor', 'Home::index');
+$routes->get('/admin', 'Home::index');
+$routes->get('/recuperarpasword/:any', 'Home::index');
+$routes->get('/confirmarregistro/:any', 'Home::index');
+$routes->get('/', 'Home::index');*/
 
-$routes->group("api",function($routes){
-    $routes->get("index","Home::index",["filter"=>"authFilter"]);
-    
-    $routes->group("usuario",function($routes){
-        $routes->get("informacion","UserController::info");
+//Url API's
+$routes->group("api",static function($routes){
+    //URL Publica --usuarios
+    $routes->group("login",static function($routes){
+        $routes->post("/","UserController::index");
+        $routes->post("add","UserController::post"); 
+        //---- no utilizados
+        //$routes->post("recuperarpassword","UserController::post");
+        //$routes->post("confirmarregistro/:any","UserController::post");
+    });
+    //Usuario
+    $routes->group("usuario",static function($routes){                
+        //$routes->post("addCar","UserController::post");
+        //$routes->post("removeCar/:num","UserController::post");
+        //$routes->post("getCar","UserController::post");
+        //$routes->post("getCar/:num","UserController::post");
+        //$routes->post("pay/:num","UserController::post");
+        //$routes->post("update/:any","UserController::post");
+        $routes->get("info","UserController::info");
     });
 });
 

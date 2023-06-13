@@ -3,7 +3,7 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
-use PHPUnit\Framework\Constraint\Constraint;
+//use PHPUnit\Framework\Constraint\Constraint;
 
 class AddUser extends Migration
 {
@@ -67,6 +67,14 @@ class AddUser extends Migration
                 "constraint"=>60,
                 "null"=>false
             ],
+            "token_password"=>[
+                "type"=>"varchar",
+                "constraint"=>60
+            ],
+            "token_confirmacion"=>[
+                "type"=>"varchar",
+                "constraint"=>60
+            ],
             'created_at'=>[
                 "type"=>"TIMESTAMP",
                 "null"=>"true"
@@ -81,7 +89,7 @@ class AddUser extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("usuarios");
+        $this->forge->createTable("usuarios",false,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()

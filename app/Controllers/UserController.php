@@ -3,17 +3,20 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
-
 use \Firebase\JWT\JWT;
+use App\Libraries\Usuario\FactoryUsuario;
+use App\Libraries\Usuario\UsuarioType;
 
 class UserController extends BaseController{
     use ResponseTrait;
 
     //Informacion del usuario ["get"]
     public function info(){
-        $userModel = new UserModel();
+        $userModel = FactoryUsuario::getInstance(UsuarioType::Usuario);
 
-        $correo = $this->request->getVar("correo");
+        //$correo = $this->request->getVar("correo");
+        $correo = $this->request->getGet("correo");
+        //$validate2= $this->form_validation->set_rules("correo","Correo","required|valid_email");
 
         $validate=$this->validate([
             "correo"=>"required|valid_email"
@@ -87,7 +90,7 @@ class UserController extends BaseController{
         $response = [
             "Messague"  => "Inicio de sescion exitoso",
             "token"     => $token,
-            "sesion"   =>true,
+            "sesion"    =>true,
             "user"      =>[
                 "nombre"                    =>  $user["nombre"],
                 "apellido"                  =>  $user["apellido"],
