@@ -59,11 +59,13 @@ class Vendedores extends Migration
             ],
             "token_confirmacion"=>[
                 "type"=>"varchar",
-                "constraint"=>60
+                "constraint"=>60,
+                "null"=>true
             ],
             "token_pasword"=>[
                 "type"=>"varchar",
-                "constraint"=>60
+                "constraint"=>60,
+                "null"=>true
             ],
             "numero_de_cuenta"=>[
                 "type"=>"int",
@@ -71,18 +73,18 @@ class Vendedores extends Migration
             "banco"=>[
                 "type"=>"int",
             ],
-            
+            //Marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'updated_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'deleted_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ]
         ]);
         $this->forge->addPrimaryKey("id");

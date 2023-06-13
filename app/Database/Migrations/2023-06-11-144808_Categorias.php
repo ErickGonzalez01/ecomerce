@@ -21,18 +21,18 @@ class Categorias extends Migration
                 "type"                  =>"VARCHAR",
                 "constraint"            =>20,
             ],
-            
+            //Marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'updated_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'deleted_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ]
         ]);
         $this->forge->addPrimaryKey("id");

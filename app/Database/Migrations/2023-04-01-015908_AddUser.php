@@ -69,23 +69,26 @@ class AddUser extends Migration
             ],
             "token_password"=>[
                 "type"=>"varchar",
-                "constraint"=>60
+                "constraint"=>60,
+                "null"=>true
             ],
             "token_confirmacion"=>[
                 "type"=>"varchar",
-                "constraint"=>60
+                "constraint"=>60,
+                "null"=>true
             ],
+            //Marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'updated_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'deleted_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ]
         ]);
         $this->forge->addPrimaryKey("id");

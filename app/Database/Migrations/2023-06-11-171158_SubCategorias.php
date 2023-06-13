@@ -24,18 +24,18 @@ class SubCategorias extends Migration
                 "type"=>"varchar",
                 "constraint"=>45
             ],
-            
+            //Marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'updated_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ],
             'deleted_at'=>[
                 "type"=>"TIMESTAMP",
-                "null"=>"true"
+                "null"=>true
             ]
         ]);
         $this->forge->addPrimaryKey("id");
