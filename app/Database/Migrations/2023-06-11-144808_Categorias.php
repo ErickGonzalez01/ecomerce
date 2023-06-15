@@ -36,7 +36,7 @@ class Categorias extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("categorias",false,["ENGINE"=>"InnoDB"]);
+        $this->forge->createTable("categorias",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()

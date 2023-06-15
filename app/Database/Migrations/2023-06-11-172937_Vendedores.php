@@ -72,6 +72,7 @@ class Vendedores extends Migration
             ],
             "banco"=>[
                 "type"=>"int",
+                "unsigned"=>true
             ],
             //Marcas de tiempo
             'created_at'=>[
@@ -88,7 +89,9 @@ class Vendedores extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("vendedores",false,["ENGINE"=>"InnoDB"]);
+        $this->forge->addForeignKey("banco","bancos","id","cascade","restrict");
+        $this->forge->createTable("vendedores",true,["ENGINE"=>"InnoDB"]);
+        
 
     }
 

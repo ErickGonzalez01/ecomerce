@@ -74,7 +74,7 @@ class Productos extends Migration
         $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey("id_vendedor","vendedores","id","cascade","restrict");
         $this->forge->addForeignKey("id_sub_categoria","sub_categorias","id","cascade","restrict");
-        $this->forge->createTable("productos",false,["ENGINE"=>"InnoDB"]);
+        $this->forge->createTable("productos",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()

@@ -40,7 +40,7 @@ class SubCategorias extends Migration
         ]);
         $this->forge->addPrimaryKey("id");
         $this->forge->addForeignKey("id_categoria","categorias","id","cascade","no action");
-        $this->forge->createTable("sub_categorias",false,["ENGINE"=>"InnoDB"]);
+        $this->forge->createTable("sub_categorias",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()

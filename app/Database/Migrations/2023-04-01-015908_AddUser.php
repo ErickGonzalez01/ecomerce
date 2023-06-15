@@ -92,7 +92,7 @@ class AddUser extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("usuarios",false,["ENGINE"=>"InnoDB"]);
+        $this->forge->createTable("usuarios",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()
