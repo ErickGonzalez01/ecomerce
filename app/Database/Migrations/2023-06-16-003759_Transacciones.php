@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class SubUsuarioVendedor extends Migration
+class Transacciones extends Migration
 {
     public function up()
     {
@@ -16,33 +16,37 @@ class SubUsuarioVendedor extends Migration
                 "unique"=>true,
                 "auto_increment"=>true
             ],
-            "usuario"=>[
-                "type"=>"varchar",
-                "constraint"=>45,
-                "unique"=>true
+            "fecha"=>[
+                "type"=>"datetime"
             ],
-            "password"=>[
-                "type"=>"char",
-                "constraint"=>60
-            ],
-            "usuario_raiz"=>[
-                "type"=>"int",
-                "unsigned"=>true
-            ],
-            "nombre"=>[
+            "titular"=>[
                 "type"=>"varchar",
                 "constraint"=>45
             ],
-            "apellido"=>[
+            "monto"=>[
+                "type"=>"decimal",
+                "constraint"=>"14,2"
+            ],
+            "forma_pago"=>[
                 "type"=>"varchar",
                 "constraint"=>45
             ],
-            "roll"=>[
-                "type"=>"varchar",
-                "constraint"=>60,
-                "null"=>true
+            "num_tarjeta"=>[
+                "type"=>"int"
             ],
-            //Marcado de tiempo
+            "banco"=>[
+                "type"=>"varchar",
+                "constraint"=>45
+            ],
+            "estado_desembolso"=>[
+                "type"=>"varchar",
+                "constraint"=>45
+            ],
+            "numero_ref"=>[
+                "type"=>"varchar",
+                "constraint"=>45
+            ],
+            //marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
                 "null"=>true
@@ -55,16 +59,14 @@ class SubUsuarioVendedor extends Migration
                 "type"=>"TIMESTAMP",
                 "null"=>true
             ]
-
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->addForeignKey("usuario_raiz","vendedores","id","cascade","restrict");
-        $this->forge->createTable("sub_usuario_vendedor",true,["ENGINE"=>"InnoDB"]);
+        $this->forge->createTable("transacciones",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()
     {
         //
-        $this->forge->dropTable("sub_usuario_vendedor");
+        $this->forge->dropTable("transacciones");
     }
 }

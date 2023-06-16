@@ -27,6 +27,19 @@ class Bancos extends Migration
             "ruta_ach"=>[
                 "type"=>"varchar",
                 "constraint"=>15
+            ],
+            //Marcado de tiempo
+            'created_at'=>[
+                "type"=>"TIMESTAMP",
+                "null"=>true
+            ],
+            'updated_at'=>[
+                "type"=>"TIMESTAMP",
+                "null"=>true
+            ],
+            'deleted_at'=>[
+                "type"=>"TIMESTAMP",
+                "null"=>true
             ]
         ]);
         $this->forge->addPrimaryKey("id");
