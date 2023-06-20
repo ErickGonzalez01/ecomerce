@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class UsuariosAdministradores extends Migration
+class FacturaDesembolso extends Migration
 {
     public function up()
     {
@@ -16,28 +16,15 @@ class UsuariosAdministradores extends Migration
                 "unique"=>true,
                 "auto_increment"=>true
             ],
-            "usuario"=>[
-                "type"=>"varchar",
-                "constraint"=>45,
-                "unique"=>true
+            "id_desembolso"=>[
+                "type"=>"int",
+                "unsigned"=>true
             ],
-            "password"=>[
-                "type"=>"char",
-                "constraint"=>60
+            "id_transaction"=>[
+                "type"=>"int",
+                "unsigned"=>true
             ],
-            "nombre"=>[
-                "type"=>"varchar",
-                "constraint"=>45
-            ],
-            "apellido"=>[
-                "type"=>"varchar",
-                "constraint"=>45
-            ],
-            "rolles"=>[
-                "type"=>"varchar",
-                "constraint"=>45
-            ],            
-            //marcas de tiempo
+            //Marcas de tiempo
             'created_at'=>[
                 "type"=>"TIMESTAMP",
                 "null"=>true
@@ -52,12 +39,14 @@ class UsuariosAdministradores extends Migration
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("usuarios_administradors",true,["ENGINE"=>"InnoDB"]);        
+        $this->forge->addForeignKey("id_desembolso","registros_desembolsos","id","cascade","restrict");
+        $this->forge->addForeignKey("id_transaction","transacciones","id","cascade","restrict");
+        $this->forge->createTable("facturas_desembolsos",true,["ENGINE"=>"InnoDB"]);
     }
 
     public function down()
     {
         //
-        $this->forge->dropTable("usuarios_administradors",true);
+        $this->forge->dropTable("facturas_desembolsos",true);
     }
 }
