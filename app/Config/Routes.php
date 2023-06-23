@@ -30,7 +30,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 
 //Url views
-$routes->get('/', 'Home::index');/*
+$routes->get('/', 'Home::index');
+$routes->get("confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
+$routes->get("document/css/(:any)","DocumentController::CSS/$1");
+/*
 $routes->get('/vendedor', 'Home::index');
 $routes->get('/admin', 'Home::index');
 $routes->get('/recuperarpasword/:any', 'Home::index');
@@ -39,14 +42,15 @@ $routes->get('/', 'Home::index');*/
 
 //Url API's
 $routes->group("api",static function($routes){
-    //URL Publica --usuarios
-    $routes->group("login",static function($routes){
-        $routes->post("/","UserController::index");
-        $routes->post("add","UserController::post"); 
-        //---- no utilizados
-        //$routes->post("recuperarpassword","UserController::post");
-        //$routes->post("confirmarregistro/:any","UserController::post");
+    //Autenticacion
+    $routes->group("authentication", static function($routes){
+        $routes->post("login","UsuarioController::Login");
+        $routes->post("signup","UsuarioController::Signup");
+        $routes->get("logout","UsuarioController::Logout");
     });
+    
+
+
     //Usuario
     $routes->group("usuario",static function($routes){                
         //$routes->post("addCar","UserController::post");
