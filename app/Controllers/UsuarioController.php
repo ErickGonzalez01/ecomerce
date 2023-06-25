@@ -101,10 +101,38 @@ class UsuarioController extends BaseController
         return $this->respond($_GET,201);
     }
     public function ConfirmarCuenta($token){
-        //echo "hola mundo, este es el token de confirmacion => ".$token;
-        //return;
-        return view("Autenticacion/confirmar_registro");
-    }
+        $method = $this->request->getMethod();
+        helper("form");
+
+        $data = array(
+            "token"=>$token
+        );
+        $rule = array(
+            "token"=>"is_not_unique[usuarios.token_confirmacion,$token]"
+        );
+
+        if(!$this->validateData($data,$rule)){
+            return $this->response->setBody("Error");
+        }
+
+        $model = new UsuarioModel();
+        $usuario = $model->where("token_confirmacion",$token);
+
+        switch ($method){
+            case "post":
+                return "hola";
+                break;
+            case "get":
+                $dataUsuario=[
+                    "nombre_apellido"=>$usuario->nombre . " " . $usuario->apellido
+                ];
+                return view("Autenticacion/confirmar_registro",$dataUsuario);
+                break;
+        }
+
+       
+        
+    }    
 
     /**
      * Metodo de respuesta para el controlador

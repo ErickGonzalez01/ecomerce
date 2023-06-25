@@ -31,8 +31,9 @@ $routes->set404Override();
 
 //Url views
 $routes->get('/', 'Home::index');
-$routes->get("confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
-$routes->get("document/css/(:any)","DocumentController::CSS/$1");
+//$routes->get("confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
+$routes->match(["get","post"],"confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
+$routes->get("document/css","DocumentController::CSS");
 /*
 $routes->get('/vendedor', 'Home::index');
 $routes->get('/admin', 'Home::index');
