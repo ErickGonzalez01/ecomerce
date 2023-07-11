@@ -14,8 +14,8 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE &
  |--------------------------------------------------------------------------
  | DEBUG MODE
  |--------------------------------------------------------------------------
- | Debug mode is an experimental flag that can allow changes throughout
- | the system. It's not widely used currently, and may not survive
- | release of the framework.
+ | El modo de depuración es una bandera experimental que puede permitir cambios en todo momento
+ |el sistema.No se usa ampliamente actualmente y puede no sobrevivir
+ |Liberación del marco.
  */
 defined('CI_DEBUG') || define('CI_DEBUG', false);

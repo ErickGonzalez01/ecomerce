@@ -34,32 +34,32 @@ class Filters extends BaseConfig
     public array $globals = [
         'before' => [
             // 'honeypot',
-            // 'csrf',
+            'csrf'=>["except"=>["api/*"]],
             // 'invalidchars',
         ],
         'after' => [
-            'toolbar',
+            //'toolbar',
             // 'honeypot',
             // 'secureheaders',
         ],
     ];
 
     /**
-     * List of filter aliases that works on a
-     * particular HTTP method (GET, POST, etc.).
+     * Lista de alias de filtro que funciona en un
+     * Método HTTP particular (obtener, post, etc.).
      *
      * Example:
      * 'post' => ['foo', 'bar']
      *
-     * If you use this, you should disable auto-routing because auto-routing
-     * permits any HTTP method to access a controller. Accessing the controller
-     * with a method you don’t expect could bypass the filter.
+     * Si usa esto, debe deshabilitar la ruta automática porque la ruta automática
+     * Permite cualquier método HTTP para acceder a un controlador.Acceder al controlador
+     * Con un método que no espera podría evitar el filtro.
      */
     public array $methods = [];
 
     /**
-     * List of filter aliases that should run on any
-     * before or after URI patterns.
+     * Lista de alias de filtro que deben ejecutarse en cualquier
+     * Antes o después de los patrones URI.
      *
      * Example:
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]

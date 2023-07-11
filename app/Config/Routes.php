@@ -32,7 +32,7 @@ $routes->set404Override();
 //Url views
 $routes->get('/', 'Home::index');
 //$routes->get("confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
-$routes->match(["get","post"],"confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
+$routes->match(["get","post"],"confirmar_registro/(:any)","UsuarioController::ConfirmarCuenta/$1");
 $routes->get("document/css","DocumentController::CSS");
 /*
 $routes->get('/vendedor', 'Home::index');
@@ -53,14 +53,15 @@ $routes->group("api",static function($routes){
 
 
     //Usuario
-    $routes->group("usuario",static function($routes){                
+    $routes->group("usuario",["filter"=>"authFilter"],static function($routes){                
         //$routes->post("addCar","UserController::post");
         //$routes->post("removeCar/:num","UserController::post");
         //$routes->post("getCar","UserController::post");
         //$routes->post("getCar/:num","UserController::post");
         //$routes->post("pay/:num","UserController::post");
         //$routes->post("update/:any","UserController::post");
-        $routes->get("info","UserController::info");
+        //$routes->get("/","UsuarioController::Logout");
+        $routes->get("/","UsuarioController::Test");
     });
 });
 

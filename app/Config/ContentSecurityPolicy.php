@@ -5,11 +5,11 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 
 /**
- * Stores the default settings for the ContentSecurityPolicy, if you
- * choose to use it. The values here will be read in and set as defaults
- * for the site. If needed, they can be overridden on a page-by-page basis.
+ * Almacena la configuración predeterminada para el contenido de la capacidad
+ * Elija usarlo.Los valores aquí se leerán y se establecerán como predeterminados
+ * Para el sitio.Si es necesario, pueden ser anulados por página por página.
  *
- * Suggested reference for explanations:
+ * Referencia sugerida para explicaciones:
  *
  * @see https://www.html5rocks.com/en/tutorials/security/content-security-policy/
  */
@@ -20,121 +20,122 @@ class ContentSecurityPolicy extends BaseConfig
     // -------------------------------------------------------------------------
 
     /**
-     * Default CSP report context
+     * Contexto de informe de CSP predeterminado
      */
     public bool $reportOnly = false;
 
     /**
-     * Specifies a URL where a browser will send reports
-     * when a content security policy is violated.
+     * Especifica una URL en la que un navegador enviará informes
+     * Cuando se viola una política de seguridad de contenido.
      */
     public ?string $reportURI = null;
 
     /**
-     * Instructs user agents to rewrite URL schemes, changing
-     * HTTP to HTTPS. This directive is for websites with
-     * large numbers of old URLs that need to be rewritten.
+     * Instruye a los agentes de los usuarios que reescriban esquemas de URL, cambiando
+     * Http a https.Esta directiva es para sitios web con
+     * Grandes cantidades de URL antiguas que necesitan ser reescritas.
      */
     public bool $upgradeInsecureRequests = false;
 
     // -------------------------------------------------------------------------
-    // Sources allowed
-    // Note: once you set a policy to 'none', it cannot be further restricted
-    // -------------------------------------------------------------------------
+    //Fuentes permitidas
+    // NOTA: Una vez que establece una política en 'Ninguno', no se puede restringir aún más
+    //-------------------------------------------------------------------------
 
     /**
-     * Will default to self if not overridden
+     * Ponaldeo a uno mismo si no se anula
      *
      * @var string|string[]|null
      */
-    public $defaultSrc;
+    public $defaultSrc='self';
 
     /**
-     * Lists allowed scripts' URLs.
+     * Las listas permitieron las URL de los scripts.
      *
      * @var string|string[]
      */
     public $scriptSrc = 'self';
 
     /**
-     * Lists allowed stylesheets' URLs.
+     * Las listas permitieron las URL de hojas de estilo.
      *
      * @var string|string[]
      */
-    public $styleSrc = 'self';
+    public $styleSrc = ["'self'","'sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM'"];
+    //style-src 'self' https://cdn.jsdelivr.net 'nonce-c9e2a42ab59438939b35c2bd'
 
     /**
-     * Defines the origins from which images can be loaded.
+     * Define los orígenes de los que se pueden cargar imágenes.
      *
      * @var string|string[]
      */
     public $imageSrc = 'self';
 
     /**
-     * Restricts the URLs that can appear in a page's `<base>` element.
+     * Restringe las URL que pueden aparecer en el elemento `<base>` de una página.
      *
-     * Will default to self if not overridden
+     * Se debe por defecto a uno mismo si no se anula
      *
      * @var string|string[]|null
      */
-    public $baseURI;
+    public $baseURI='self';
 
     /**
-     * Lists the URLs for workers and embedded frame contents
+     * Enumera las URL para trabajadores y contenidos de cuadro integrado
      *
      * @var string|string[]
      */
     public $childSrc = 'self';
 
     /**
-     * Limits the origins that you can connect to (via XHR,
-     * WebSockets, and EventSource).
+     * Limita los orígenes a los que puede conectarse (a través de XHR,
+     * WebSockets y eventsource).
      *
      * @var string|string[]
      */
     public $connectSrc = 'self';
 
     /**
-     * Specifies the origins that can serve web fonts.
+     * Especifica los orígenes que pueden servir fuentes web.
      *
      * @var string|string[]
      */
     public $fontSrc;
 
     /**
-     * Lists valid endpoints for submission from `<form>` tags.
+     * Enumera los puntos finales válidos para el envío de las etiquetas `<form>`.
      *
      * @var string|string[]
      */
     public $formAction = 'self';
 
     /**
-     * Specifies the sources that can embed the current page.
-     * This directive applies to `<frame>`, `<iframe>`, `<embed>`,
-     * and `<applet>` tags. This directive can't be used in
-     * `<meta>` tags and applies only to non-HTML resources.
+     * Especifica las fuentes que pueden incrustar la página actual.
+     * Esta directiva se aplica a `<Frame>`, `<iframe>`, `<griT>`,
+     * y `<Applet>` etiquetas.Esta directiva no se puede usar en
+     * `<META>` Etiquetas y se aplica solo a los recursos no HTML.
      *
      * @var string|string[]|null
      */
     public $frameAncestors;
 
     /**
-     * The frame-src directive restricts the URLs which may
-     * be loaded into nested browsing contexts.
+     * La Directiva Frame-SRC restringe las URL que pueden
+     * estar cargado en contextos de navegación anidados.
      *
      * @var array|string|null
      */
     public $frameSrc;
 
     /**
-     * Restricts the origins allowed to deliver video and audio.
+     * Restringe los orígenes permitidos para entregar video y audio.
      *
      * @var string|string[]|null
      */
     public $mediaSrc;
 
     /**
-     * Allows control over Flash and other plugins.
+     * Permite el control sobre flash y otros complementos.
      *
      * @var string|string[]
      */
@@ -146,31 +147,34 @@ class ContentSecurityPolicy extends BaseConfig
     public $manifestSrc;
 
     /**
-     * Limits the kinds of plugins a page may invoke.
+     * Limita los tipos de complementos que una página puede invocar.
      *
      * @var string|string[]|null
      */
     public $pluginTypes;
 
     /**
-     * List of actions allowed.
+     * Lista de acciones permitidas.
      *
      * @var string|string[]|null
      */
     public $sandbox;
 
     /**
-     * Nonce tag for style
+     * Etiqueta nonce para estilo
      */
+    //public string $styleNonceTag = '';
     public string $styleNonceTag = '{csp-style-nonce}';
 
     /**
-     * Nonce tag for script
+     * Etiqueta Nonce para guión
      */
+    //public string $scriptNonceTag = '';
     public string $scriptNonceTag = '{csp-script-nonce}';
 
     /**
-     * Replace nonce tag automatically
+     * Reemplace la etiqueta Nonce automáticamente
      */
-    public bool $autoNonce = true;
+    public bool $autoNonce = false;
+    //public bool $autoNonce = true;
 }
