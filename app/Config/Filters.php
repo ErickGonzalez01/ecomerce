@@ -28,8 +28,8 @@ class Filters extends BaseConfig
     ];
 
     /**
-     * List of filter aliases that are always
-     * applied before and after every request.
+     * Lista de alias de filtro que siempre
+     * Aplicado antes y después de cada solicitud.
      */
     public array $globals = [
         'before' => [
@@ -65,7 +65,10 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
-        "cors"          => ["before"     =>["api/*"]],
+        "cors"          => [
+            "after"     =>["api/*"],
+            "before"    =>["api/*"]
+        ],
         "authFilter"    => ["before"     =>["api/usuario/*"]]
     ];
 }

@@ -36,7 +36,7 @@ class Cors extends \Fluent\Cors\Config\Cors
      *
      * @var array
      */
-    public $allowedMethods = ['*'];
+    public $allowedMethods = ['*']; //[*]
 
     /**
      * --------------------------------------------------------------------------
@@ -66,37 +66,37 @@ class Cors extends \Fluent\Cors\Config\Cors
      * Exposed headers
      * --------------------------------------------------------------------------
      *
-     * Headers that are allowed to be exposed to the web server.
+     * Encabezados que pueden estar expuestos al servidor web.
      *
      * @var array
      */
-    public $exposedHeaders = [];
+    public $exposedHeaders = []; //[]
 
     /**
      * --------------------------------------------------------------------------
      * Max age
      * --------------------------------------------------------------------------
      *
-     * Indicates how long the results of a preflight request can be cached.
+     * Indica cuánto tiempo se pueden almacenar en caché los resultados de una solicitud previa al vuelo.
      *
      * @var int
      */
-    public $maxAge = 0;
+    public $maxAge = 0; //0
 
     /**
      * --------------------------------------------------------------------------
      * Whether or not the response can be exposed when credentials are present
      * --------------------------------------------------------------------------
      *
-     * Indicates whether or not the response to the request can be exposed when the
-     * credentials flag is true. When used as part of a response to a preflight
-     * request, this indicates whether or not the actual request can be made
-     * using credentials.  Note that simple GET requests are not preflighted,
-     * and so if a request is made for a resource with credentials, if
-     * this header is not returned with the resource, the response
-     * is ignored by the browser and not returned to web content.
+     * Indica si la respuesta a la solicitud puede expuestos o no cuando el
+     * La bandera de credenciales es verdadera.Cuando se usa como parte de una respuesta a un prever
+     * Solicitud, esto indica si la solicitud real se puede hacer o no
+     * Uso de credenciales.Tenga en cuenta que las solicitudes de Get Simple no están preferidas,
+     * Y así, si se realiza una solicitud para un recurso con credenciales, si
+     * Este encabezado no se devuelve con el recurso, la respuesta
+     * es ignorado por el navegador y no se devuelve al contenido web.
      *
      * @var boolean
      */
-    public $supportsCredentials = false;
+    public $supportsCredentials = false; //false
 }

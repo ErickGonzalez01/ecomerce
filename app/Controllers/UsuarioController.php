@@ -1,10 +1,6 @@
-<?php
-
-namespace App\Controllers;
+<?php namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Entities\UsuarioEntity;
-use App\Libraries\Usuario\UsuarioType;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UsuarioModel;
 use Firebase\JWT\JWT;
@@ -13,10 +9,7 @@ class UsuarioController extends BaseController
 {
     use ResponseTrait;
 
-    public function Login()
-    { //post
-
-        //Iniciar sesion
+    public function Login(){ //post Iniciar sesion
         $data = array(
             "correo" => $this->request->getVar("correo"),
             "password" => $this->request->getVar("password")
@@ -36,14 +29,18 @@ class UsuarioController extends BaseController
         ]);
 
         if (!$validate) {
-            return $this->responder(400, "Error de validacion", $this->validator->getErrors());
+            //return $this->responder(400, "Error de validacion", $this->validator->getErrors());
+            return $this->Responder(404,"Usuario o contraseña incorrectas",["status"=>404,"error"=>"usuario o contraseña incorrecta, por favor verifique e intente nuevamente."]);
         }
 
         $model = new UsuarioModel();
         $usuarioEntity = $model->where("correo", $data["correo"])->first();
 
-        $tokenExiste = $usuarioEntity->token_confirmacion;
+        if($usuarioEntity==null || !password_verify($data["password"],$usuarioEntity->password)){
+            return $this->Responder(404,"Usuario o contraseña incorrectas",["status"=>404,"error"=>"usuario o contraseña incorrecta, por favor verifique e intente nuevamente."]);
+        }
 
+        $tokenExiste = $usuarioEntity->token_confirmacion;
 
         if (!$tokenExiste == null) {
             return $this->Responder(401, "Error de confirmacion de cuenta", [
@@ -52,16 +49,11 @@ class UsuarioController extends BaseController
             ]);
         }
 
-        if(!password_verify($data["password"],$usuarioEntity->password)){
-            return $this->Responder(404,"Usuario o contraseña incorrectas",["status"=>404,"error"=>"usuario o contraseña incorrecta, por favor verifique e intente nuevamente."]);
-
-        }
-
         //token JWT
 
         $key = getenv("JWT_SECRET");
         $iat = time();
-        $exp = $iat+30;
+        $exp = $iat+3600;
 
         $payload = array(
             "iss" => base_url(),
@@ -76,11 +68,9 @@ class UsuarioController extends BaseController
         );
 
         $token = JWT::encode($payload,$key,"HS256");
-        return $this->Responder(200,"Se a iniciado secion correctament",[],["token"=>$token,"nombe"=>$usuarioEntity->nombre,"apellido"=>$usuarioEntity->apellido]);
+        return $this->Responder(200,"Se a iniciado secion correctamente",[],["token"=>$token,"nombre"=>$usuarioEntity->nombre,"apellido"=>$usuarioEntity->apellido,"correo"=>$usuarioEntity->correo]);
     }
-    public function Signup()
-    { //post
-        //Registrarse
+    public function Signup(){ //post Registrarse
 
         //Datos del post        
         $data = array(
@@ -94,19 +84,19 @@ class UsuarioController extends BaseController
             "departamento" => $this->request->getVar("departamento"),
             "municipio" => $this->request->getVar("municipio"),
             "barrio_comarca_colonia" => $this->request->getVar("barrio_comarca_colonia"),
-            "token_confirmacion" => uniqid("qwerty", true)
+            "token_confirmacion" => bin2hex(random_bytes(30))//uniqid("qwerty", true)
         );
 
         //Validacion
         $validate = $this->validate([
             "nombre" => "required",
             "apellido" => "required",
-            "fecha_nacimiento" => "required|valid_date[d/m/Y]",
+            "fecha_nacimiento" => "required|valid_date[Y-m-d]",
             "telefono" => "required",
             "correo" => "required|valid_email|is_unique[usuarios.correo]",
             "password" => "required|alpha_numeric_punct|min_length[8]|max_length[12]",
             "password_comfirm" => "required|alpha_numeric_punct|min_length[8]|max_length[12]|matches[password]",
-            "direccion" => "required|min_length[45]|max_length[255]",
+            "direccion" => "required|min_length[15]|max_length[255]",
             "departamento" => "required",
             "municipio" => "required",
             "barrio_comarca_colonia" => "required"
@@ -114,7 +104,7 @@ class UsuarioController extends BaseController
 
         //Validacion fallida
         if (!$validate) {
-            return $this->responder(500, "Error al validar las entradas", $this->validator->getErrors());
+            return $this->responder(500, "Error al validar las entradas o correo ya existe.", $this->validator->getErrors());
         }
 
         //Insertando el usuario
@@ -122,17 +112,24 @@ class UsuarioController extends BaseController
         $model->insert($data);
 
         //Respuesta exitosa
+
+        //Respuesta para "php spark serve"
         return $this->responder(201, "Se a registrado con exito", [], ["url_confirm" => base_url() . "confirmar_registro/" . $data["token_confirmacion"]]);
+        
+        //Respuesta para apache proxy inverso
+        //return $this->responder(201, "Se a registrado con exito", [], ["url_confirm" => "http://192.168.1.3/api/" . "confirmar_registro/" . $data["token_confirmacion"]]);
     }
-    public function Logout()
-    { //get
-        //Cerrar sesion
-        return $this->respond($_GET, 201);
+    public function Logout(){ //get Cerrar sesion #[Not Fount]
+        //helper("usuario");//
+        helper('usuario');
+        $data=GetDataUsuarioToken($this->request);
+        //$this->setcookie("session",[],3600);
+        return $this->respond(["OK"=>$data], 201);
     }
 
-    public function ConfirmarCuenta($token=null)
-    { //get ]=[ post
+    public function ConfirmarCuenta($token=null){ //get-post Confirmar cuenta de usuario
 
+        //Confirmar cuenta del usuario
         //Importando ayudantes
         helper("security");
         helper("form");
@@ -152,7 +149,7 @@ class UsuarioController extends BaseController
             return view("errors/html/error_404",["message"=>"A ocurrido un error."]);
         }
 
-        //Obteniendo metodo fr la solicitud
+        //Obteniendo metodo de la solicitud
         $method = $this->request->getMethod();
 
         //Modelo del usuario
@@ -205,8 +202,13 @@ class UsuarioController extends BaseController
         }      
     }
 
-    public function Test(){
-        return $this->respond(["Test"=>"es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona"],200,"Test");
+    /**
+     * Cadena de texto aleatorio alfanumerico de 60 caracteres
+     * @return IResponse
+     */
+    public function Test(){ //Metodo de prueva puede eleiminarse con el tiempo        
+        $randomString = bin2hex(random_bytes(30));
+        return $this->respond(["Test"=>"es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona","has_60"=>$randomString],200,"Test");
     }
 
     /**
@@ -215,9 +217,9 @@ class UsuarioController extends BaseController
      * @param mensaje es el mensaje que se envia respondiendo a la solicitud
      * @param error si a de ocurrir un error aqui se detallan
      * @param data son los datos asociados a la solicitud
-     * @return Respond devuelve una respuesta json
+     * @return ResponseInterface devuelve una respuesta json
      */
-    private function Responder($status = 200, $mensaje, $error = [], $data = [])
+    private function Responder($status = 200, $mensaje, $error = [], $data = []) // Method Formato de respuesta para este controlador
     {
         return $this->respond([
             "status" => $status,

@@ -42,12 +42,12 @@ $routes->get('/confirmarregistro/:any', 'Home::index');
 $routes->get('/', 'Home::index');*/
 
 //Url API's
-$routes->group("api",static function($routes){
+$routes->group("api",["filter"=>"cors"],static function($routes){
     //Autenticacion
     $routes->group("authentication", static function($routes){
         $routes->post("login","UsuarioController::Login");
         $routes->post("signup","UsuarioController::Signup");
-        $routes->get("logout","UsuarioController::Logout");
+        $routes->post("logout","UsuarioController::Logout");
     });
     
 
@@ -62,6 +62,7 @@ $routes->group("api",static function($routes){
         //$routes->post("update/:any","UserController::post");
         //$routes->get("/","UsuarioController::Logout");
         $routes->get("/","UsuarioController::Test");
+        //$routes->get("logout","UsuarioController::Logout");
     });
 });
 

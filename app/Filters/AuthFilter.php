@@ -72,13 +72,13 @@ class AuthFilter implements FilterInterface
             //--------------
             JWT::decode($token, new Key($key, "HS256"));
             //return $response->setJSON(["test"=>"OK","token"=>$token[1]]);
-            $data=[
+            /*$data=[
                 "status"=>"OK",
                 "code"=>200,
                 "message"=>"Éxito, se ha comprobado su identidad",
                 "error"=>[]
             ];
-            return $response->setStatusCode(ResponseInterface::HTTP_OK)->setJSON($data);
+            return $response->setStatusCode(ResponseInterface::HTTP_OK)->setJSON($data);*/
 
         }/*catch(Exception $e){
             return $response->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR,"Ocurrio un error al tratar de validar el token")->setJSON(["status"=>500,"message"=>"token invalido"]);
