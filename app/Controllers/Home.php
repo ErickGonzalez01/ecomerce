@@ -8,4 +8,8 @@ class Home extends BaseController
     {
         return view('welcome_message');
     }
+
+    public function Test(){
+        return view("Autenticacion/ok");
+    }
 }

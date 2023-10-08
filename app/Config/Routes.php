@@ -31,9 +31,12 @@ $routes->set404Override();
 
 //Url views
 $routes->get('/', 'Home::index');
-//$routes->get("confirmar_registro/(:hash)","UsuarioController::ConfirmarCuenta/$1");
 $routes->match(["get","post"],"confirmar_registro/(:any)","UsuarioController::ConfirmarCuenta/$1");
 $routes->get("document/css","DocumentController::CSS");
+
+$routes->get("/test","Home::Test");
+
+$routes->match(["get","post"],"nueva_clave/(:any)","UsuarioController::NuevaClave/$1");
 /*
 $routes->get('/vendedor', 'Home::index');
 $routes->get('/admin', 'Home::index');
@@ -48,6 +51,7 @@ $routes->group("api",["filter"=>"cors"],static function($routes){
         $routes->post("login","UsuarioController::Login");
         $routes->post("signup","UsuarioController::Signup");
         $routes->post("logout","UsuarioController::Logout");
+        $routes->post("recuperarpassword","UsuarioController::RecuperarPassword");
     });
     
 

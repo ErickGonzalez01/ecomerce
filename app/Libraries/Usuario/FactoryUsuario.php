@@ -6,13 +6,13 @@
 
     class FactoryUsuario implements IFactoryUsuario {
 
-        public static function getInstance(UsuarioType $usuarioType){
+        public static function getInstance($usuarioType){
             switch($usuarioType){
                 case UsuarioType::Usuario:
                     return new UserModel;
                 break;
                 default:
-                    return throw "UsuarioType Undefaund";
+                    throw "UsuarioType Undefaund";
             }
         }
     }
